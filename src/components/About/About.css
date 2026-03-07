@@ -1,0 +1,164 @@
+.about-container {
+    /* Inverted Theme: Near black background, warm text */
+    background-color: #0b0b0c;
+    color: var(--color-bg);
+    /* Use the off-white from :root */
+    min-height: 100vh;
+    
+    /* Pull the container up so the black background sits under the sticky nav immediately */
+    margin-top: -120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Compensate for the negative margin so content stays centered perfectly */
+    padding: calc(8rem + 120px) 2rem 8rem 2rem;
+
+    /* Entrada suave al navegar a esta sección */
+    animation: fadeIntoDark 1s ease forwards;
+}
+
+@keyframes fadeIntoDark {
+    from {
+        background-color: var(--color-bg);
+        color: var(--color-text);
+    }
+
+    to {
+        background-color: #0b0b0c;
+        color: var(--color-bg);
+    }
+}
+
+.about-content {
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    gap: 5rem;
+    align-items: center;
+}
+
+/* Lado Fotográfico */
+.about-image-wrapper {
+    flex: 1;
+    max-width: 500px;
+    /* Simular un ligero brillo/sombra tras la foto oscura */
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.about-portrait {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    /* Filtro en blanco y negro de alto contraste */
+    filter: grayscale(100%) contrast(1.2) brightness(0.8);
+    transition: filter 0.5s ease;
+}
+
+.about-portrait:hover {
+    filter: grayscale(80%) contrast(1.1) brightness(0.9);
+}
+
+/* Lado Textual */
+.about-text-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.about-title {
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+    margin-bottom: 3rem;
+    /* Acento de color sutil */
+    background: linear-gradient(135deg, var(--color-bg), var(--color-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.about-statement {
+    font-weight: 300;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: rgba(248, 247, 246, 0.85);
+    /* Off-white semi-transparente para lectura suave */
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+/* Enlaces sociales */
+.about-socials {
+    display: flex;
+    gap: 1.5rem;
+    font-weight: 400;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.about-socials a {
+    color: var(--color-bg);
+    transition: color 0.3s;
+    position: relative;
+}
+
+.about-socials a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-accent);
+    bottom: -4px;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.about-socials a:hover {
+    color: var(--color-accent);
+}
+
+.about-socials a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.about-socials .separator {
+    color: rgba(248, 247, 246, 0.3);
+}
+
+/* Responsivo para móviles */
+@media (max-width: 900px) {
+    .about-content {
+        flex-direction: column;
+        gap: 3rem;
+        padding-top: 2rem;
+    }
+
+    .about-portrait {
+        aspect-ratio: 1;
+        /* Cuadrado en móviles para no alargar demasiado */
+    }
+
+    .about-title {
+        text-align: center;
+    }
+
+    .about-statement {
+        text-align: center;
+        margin: 0 auto 3rem;
+    }
+
+    .about-socials {
+        justify-content: center;
+    }
+}

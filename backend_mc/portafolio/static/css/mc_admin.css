@@ -1,0 +1,65 @@
+/* =========================================
+   M.C. FOTOGRAFÍA - PANEL DE ADMINISTRACIÓN
+   Variable Maestra de Marca Agnóstica
+========================================= */
+
+/* Definimos el Naranja Corporativo como variable raíz para Bootstrap 5 */
+:root {
+    --mc-orange: #ee7c2b;
+    --mc-orange-hover: #d66a1f;
+}
+
+/* 1. BARRA LATERAL (Activos y Hovers) */
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    background-color: var(--mc-orange) !important;
+    color: #fff !important;
+}
+
+/* Cambiar los iconos a blanco cuando el enlace está activo */
+.nav-sidebar .nav-item>.nav-link.active .nav-icon {
+    color: #fff !important;
+}
+
+/* 2. BOTONES PRINCIPALES (Save, Add, Opciones M.C) */
+/* Anulamos el outline-orange ficticio que intentó poner Jazzmin/Bootstrap */
+.btn-outline-orange {
+    color: var(--mc-orange) !important;
+    border-color: var(--mc-orange) !important;
+    background-color: transparent;
+}
+
+.btn-outline-orange:hover,
+.btn-outline-orange:active,
+.btn-outline-orange:focus {
+    color: #fff !important;
+    background-color: var(--mc-orange-hover) !important;
+    border-color: var(--mc-orange-hover) !important;
+}
+
+/* Fuerza bruta para botones de guardar e inputs principales */
+.btn-info,
+.btn-primary,
+input[type="submit"].default,
+.submit-row input[type="submit"] {
+    background-color: var(--mc-orange) !important;
+    border-color: var(--mc-orange) !important;
+    color: #fff !important;
+}
+
+.btn-info:hover,
+.btn-primary:hover,
+input[type="submit"].default:hover,
+.submit-row input[type="submit"]:hover {
+    background-color: var(--mc-orange-hover) !important;
+    border-color: var(--mc-orange-hover) !important;
+}
+
+/* 3. ENLACES GENERALES */
+a {
+    color: var(--mc-orange);
+}
+
+a:hover {
+    color: var(--mc-orange-hover);
+}

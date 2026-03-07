@@ -1,0 +1,247 @@
+/* VISTA 1: ÍNDICE DE PROYECTOS */
+.projects-index-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem 10rem;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.projects-main-title {
+    text-align: center;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 5rem;
+    color: var(--color-text);
+}
+
+.projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8rem;
+}
+
+/* Tarjeta de Proyecto Grande (Imágenes Panorámicas) */
+.project-card {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.project-card:hover {
+    transform: scale(0.99);
+}
+
+.project-card-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/7;
+    /* Relación de aspecto panorámica dramática */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    margin: 0;
+}
+
+.project-card-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+    z-index: 1;
+}
+
+.project-card:hover .project-card-image img {
+    transform: scale(1.05);
+    /* Ligerísimo zoom a la fotografía sobre el hover */
+}
+
+/* Oscurecimiento para que el texto sea visible */
+.project-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.2) 100%);
+    z-index: 2;
+    transition: background 0.4s;
+}
+
+/* Tipografía encimada en la fotografía */
+.project-card-meta {
+    position: relative;
+    z-index: 3;
+    color: var(--color-bg);
+    /* Letras cálidas sobre la zona oscura */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    /* Transición de aparición desde abajo */
+    transform: translateY(20px);
+    opacity: 0.9;
+    transition: all 0.4s ease;
+}
+
+.project-card:hover .project-card-meta {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.project-title {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    margin: 0;
+    line-height: 1;
+}
+
+.project-year,
+.project-location {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    /* Acento Naranja para la metadata */
+    color: var(--color-accent);
+}
+
+
+/* ------------------------------------------- */
+/* VISTA 2: DETALLE DEL ENSAYO (REPORTAJE) */
+/* ------------------------------------------- */
+
+.project-detail-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem 10rem;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.back-to-projects-btn {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #888;
+    transition: color 0.3s;
+    margin-bottom: 4rem;
+}
+
+.back-to-projects-btn:hover {
+    color: var(--color-accent);
+}
+
+.project-detail-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 6rem;
+}
+
+.detail-meta {
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    margin-bottom: 1rem;
+}
+
+.detail-title {
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-bottom: 2rem;
+}
+
+.detail-description {
+    font-weight: 300;
+    font-size: 1.25rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* Galería Lineal (A diferencia del Masonry, aquí las fotos se aprecian una debajo de otra con respeto absoluto al aire) */
+.project-linear-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 6rem;
+    align-items: center;
+}
+
+.project-linear-item {
+    width: 100%;
+    max-width: 900px;
+    /* Para mantenerlas a un tamaño apreciable */
+    cursor: zoom-in;
+    /* Cursor indicativo de que se abre el lightbox */
+    transition: transform 0.4s;
+}
+
+.project-linear-item:hover {
+    transform: scale(0.99);
+    /* Levísima reducción magnética */
+}
+
+.project-linear-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* Para que la foto se vea entera dentro de su marco matte */
+}
+
+/* Cierre Narrativo al final del proyecto */
+.project-detail-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8rem;
+    /* Gran foso de aire respirable tras la última foto */
+    padding-top: 4rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    /* Línea divisoria súper suave como fin de capítulo */
+}
+
+.footer-btn {
+    font-size: 0.9rem;
+    padding: 1rem 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: transparent;
+    border-radius: 5px;
+    letter-spacing: 0.1em;
+    color: var(--color-text);
+    transition: all 0.3s ease;
+}
+
+.footer-btn:hover {
+    background: var(--color-text);
+    color: var(--color-bg);
+}
+
+
+/* Responsivo Mobile */
+@media (max-width: 850px) {
+    .projects-list {
+        gap: 4rem;
+    }
+
+    .project-card-image {
+        aspect-ratio: 4/5;
+        /* Las fotos en móvil las volvemos retrato para llenar la pantalla vertical humana */
+    }
+
+    .project-detail-header {
+        margin: 0 auto 4rem;
+    }
+
+    .project-linear-gallery {
+        gap: 4rem;
+    }
+}

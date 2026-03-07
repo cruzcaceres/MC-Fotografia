@@ -1,0 +1,252 @@
+/* BLOG: VISTA DE ÍNDICE */
+.blog-index-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 6rem 2rem 10rem;
+}
+
+.blog-header {
+    margin-bottom: 6rem;
+    text-align: center;
+}
+
+.section-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.section-subtitle {
+    font-weight: 200;
+    color: #666;
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+
+/* Items de Lista Editorial */
+.blog-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.blog-list-item {
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+    gap: 3rem;
+    align-items: flex-start;
+    cursor: pointer;
+    padding-bottom: 4rem;
+    border-bottom: 1px solid var(--color-border);
+    transition: opacity 0.3s;
+}
+
+.blog-list-item:hover {
+    opacity: 0.8;
+}
+
+.blog-list-item:last-child {
+    border-bottom: none;
+    /* No border on last */
+}
+
+/* Fechas y Tags */
+.blog-meta,
+.blog-tag {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+}
+
+.blog-meta {
+    color: #888;
+}
+
+.blog-separator {
+    margin: 0 0.5rem;
+    color: var(--color-border);
+}
+
+/* Contenido Principal de Lista */
+.blog-item-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.blog-item-title {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+.blog-item-excerpt {
+    font-weight: 300;
+    font-size: 1.1rem;
+    color: #444;
+    line-height: 1.6;
+}
+
+.read-more-btn {
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    text-align: left;
+    margin-top: 1rem;
+}
+
+/* Miniatura en Lista */
+.blog-item-thumb {
+    width: 150px;
+    height: 200px;
+    align-self: center;
+    margin-left: auto;
+}
+
+.blog-item-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ------------------------------------- */
+/* BLOG: VISTA DE POST (LECTURA INDIVIDUAL) */
+/* ------------------------------------- */
+
+.blog-post-container {
+    /* Ancho confortable de lectura solicitado: ~720px para el texto */
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 2rem 10rem;
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+.back-to-index-btn {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: #888;
+    margin-bottom: 4rem;
+    transition: color 0.3s;
+}
+
+.back-to-index-btn:hover {
+    color: var(--color-accent);
+}
+
+/* Cabecera del Post */
+.post-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    max-width: 720px;
+    margin: 0 auto 4rem;
+}
+
+.post-meta-top {
+    margin-bottom: 1.5rem;
+}
+
+.post-title {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+}
+
+/* Bloque de Imagen Full Bleed */
+.post-full-image {
+    max-width: 1200px;
+    margin: 0 -10vw 4rem;
+    /* Sangrado completo visual */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.post-full-image img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+    object-fit: contain;
+}
+
+/* Capitulares diminutas UPPERCASE (Figure Captions) */
+.post-caption {
+    margin-top: 1rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    font-weight: 800;
+}
+
+/* Cuerpo Calmo de Texto */
+.post-body {
+    max-width: 680px;
+    /* Ancho de lectura de confort ~720px restando margins */
+    margin: 0 auto;
+    font-weight: 300;
+    font-size: 1.25rem;
+    line-height: 1.8;
+    color: #333;
+}
+
+.post-body p {
+    margin-bottom: 2rem;
+}
+
+/* Letra Capital o Excerpt inicial para simular revista física */
+.post-dropcap {
+    font-weight: 400;
+    font-size: 1.4rem;
+    line-height: 1.6;
+    color: var(--color-text);
+}
+
+.post-dropcap::first-letter {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 0.8;
+    float: left;
+    margin-right: 0.8rem;
+    color: var(--color-accent);
+    /* Dropcap naranja */
+}
+
+/* Citas tipográficas en bloque */
+.post-body blockquote {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--color-text);
+    line-height: 1.3;
+    margin: 4rem -2rem;
+    text-align: center;
+    letter-spacing: -0.02em;
+}
+
+
+/* Media Queries Moviles - Adaptar Grid */
+@media (max-width: 850px) {
+    .blog-list-item {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .blog-item-thumb {
+        order: -1;
+        /* Manda la miniatura arriba */
+        width: 100%;
+        height: 300px;
+        margin: 0;
+    }
+
+    .post-full-image {
+        margin: 0 0 3rem;
+        /* Quitar full bleed en móviles */
+    }
+}

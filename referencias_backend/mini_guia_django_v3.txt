@@ -1,0 +1,437 @@
+MINI GUÍA - CREACIÓN DE PROYECTO DJANGO
+=======================================
+PASOS INICIALES
+===============
+
+1) Abrir el CMD en la carpeta de su preferencia.
+
+2) Activar el ambiente adecuado.
+
+3) Crear proyecto. Para ello:
+	django-admin startproject nombre_proyecto
+
+4) Cambiarse a la carpeta nombre_proyecto, para ello:
+	cd nombre_proyecto
+
+5) Abrir el VS_Code:    code .
+
+6) Dentro del VS-Code, abrir Terminal y activa ambiente nuevamente.
+
+7) Crear aplicación:   python manage.py startapp nombre_app
+
+8) Registrar la aplicación:  Ir al settings.py, y agregar a la lista INSTALLED_APPS 
+   el proyecto recién creado. Ejemplo:
+   
+   INSTALLED_APPS = [
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "web",
+   ]
+   
+9) Ejecutar migraciones:
+
+	a) python manage.py makemigrations
+	b) python manage.py migrate
+
+10) Configurar el urls.py principal (del proyecto).
+
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", include("web.urls")),
+]
+
+11) En la carpeta del proyecto ("web"), crear el archivo urls.py 
+con el siguiente contenido:
+
+from django.urls import path
+from .views import index
+
+urlpatterns = [
+    path("", index, name = "index" ),    
+]
+
+12) Crear la vista index. Para ello, en el archivo views.py 
+agregue lo siguiente:
+
+from django.shortcuts import render
+
+def index(request):
+    context = {}
+    return render(request, "index.html", context)
+
+13) En la carpeta de la aplicación, crear una sub-carpeta llamada "templates".
+    Crear ../templates/index.html, con el contenido deseado.
+
+	Coloca: Este es el index
+	
+14) Crea el archivo base.html (dentro de templates).
+Agregar el siguiente contenido:
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="xxx">
+  <meta name="description" content="Proyecto de certficación Talento Digital">
+  <meta name="keywords" content="....">
+
+  <title>Nombre de la aplicación</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+<body>
+
+  <header>
+    {% include 'header.html' %}
+  </header>
+
+  {% block message %}
+  {% if messages %}
+  {% for message in messages %}
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          <strong>{{ message }}</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endfor %}
+  {% endif %}
+  {% endblock %}
+
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <footer>
+    {% include 'footer.html' %}
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="{% static 'js/script.js' %}"></script>
+  {% block js %}
+  {% endblock %}
+</body>
+
+</html>
+
+
+15) Nueva versión del index.html
+
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="container">
+    Este es el index
+</div>
+
+{% endblock %}
+
+16) Crear el header.html (dentro de templates):
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link" href="#">Features</a>
+          <a class="nav-link" href="#">Pricing</a>
+          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+ 
+
+17) Crear el footer.html (dentro de templates):
+ 
+	<h5> Este es mi footer </h5>
+
+18) Ejecuta el servidor y prueba:   python manage.py runserver
+
+19) Crear el modelo de datos de la aplicación.
+	* Basarse en el modelo ER del caso de estudio.
+
+20) Crear el superusuario.
+	Para ello, en el terminal escriba:
+		python manage.py createsuperuser
+		
+21) Registrar los modelos en el admin.py
+
+from django.contrib import admin
+from .models import Auto
+
+admin.site.register(Auto)
+
+22) Hacer migraciones.
+
+23) Levantar servidor y verificar el acceso al sitio admin.
+		En el navegador, ingresar a: http://127.0.0.1:8000/admin
+
+
+
+AGREGANDO AUTENCIACIÓN DE USUARIOS
+==================================
+
+24) En la carpeta web/templates/  crear subcarpeta registration
+
+    /web/templates/registration
+
+25) Dentro de la carpeta registration, agregar archivo login.html
+
+{% extends 'base.html' %}
+
+{% block content %}
+<h3 class="text-center my-4">Ingrese a su cuenta:</h3>
+<div class="row">
+	<div class="col-4 offset-4">
+		{% if form.errors %}
+		<div class="row">
+			<div class="col">
+				<div class="alert alert-danger alert-dismissible fade show" role="alert">
+					<strong>Usuario y contraseña no coinciden</strong>
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+
+		<form action="{% url 'login' %}?next={{ request.GET.next }}" method="post">
+			{% csrf_token %}
+			<div class="mb-3">
+				<label for="username" class="form-label">Email<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="username" name="username" required>
+                {% if form.username.errors %}
+                    <div class="error-message">{{ form.username.errors.0 }}</div>
+                {% endif %}
+			</div>
+			<div class="mb-3">
+				<label for="password" class="form-label">Contraseña<span class="text-danger">*</span></label>
+                <input type="password" class="form-control" id="password" name="password" required>
+                {% if form.password.errors %}
+                    <div class="error-message">{{ form.password.errors.0 }}</div>
+                {% endif %}
+			</div>
+			<button type="submit" class="btn btn-primary">Ingresar</button>
+		</form>
+		<p class="mt-3">Si no se ha registrado, puede hacerlo <a href="{% url 'register' %}">AQUÍ</a></p>
+	</div>
+</div>
+{% endblock %}
+
+
+26) Dentro de la carpeta registration, agregar archivo register.html
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h3 class="text-center my-4">Crea un Usuario</h3>
+  <form action="{% url 'register' %}" method="POST" id="form">
+    {% csrf_token %}
+    <div class="row gy-4 gy-xl-5 p-4 p-xl-5">
+        <div class="col-12 col-md-6">
+            <label for="first_name" class="custom-label">Nombre<span class="text-danger">*</span></label>
+            <input name="first_name" type="text" class="form-control custom-input" required>
+        </div>
+        <div class="col-12 col-md-6">
+            <label for="last_name" class="custom-label">Apellido<span class="text-danger">*</span></label>
+            <input name="last_name" type="text" class="form-control custom-input" required>
+        </div>
+        <div class="col-12">
+            <label for="email" class="custom-label">Email<span class="text-danger">*</span></label>
+            <input name="email" type="email" class="form-control custom-input" required>
+        </div>
+        <div class="col-12 col-md-6">
+            <label for="password1" class="custom-label">Contraseña<span class="text-danger">*</span></label>
+            <input name="password1" type="password" class="form-control custom-input" required>
+        </div>
+        <div class="col-12 col-md-6">
+            <label for="password2" class="custom-label">Confirma Contraseña<span class="text-danger">*</span></label>
+            <input name="password2" type="password" class="form-control custom-input" required>
+        </div>
+        <div class="col-12">
+            <div class="d-grid">
+                <button class="btn btn-secondary btn-lg" type="submit">Registrar</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+</div>
+
+{% endblock %}
+
+
+27) Agregar vistas relativas al sistema de autenticación 
+    y activar el @login_required de la vista index
+	
+class RegisterView(View):
+    def get(self, request):
+        return render(request, 'registration/register.html')
+
+    def post(self, request):
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        if password1 != password2:
+            messages.error(request, 'Passwords do not match')
+            return redirect(reverse('register'))  
+        user = User.objects.create_user(username=email, email=email, password=password1, first_name=first_name, last_name=last_name)
+        #user.is_active = False
+        #UserProfile.objects.create(user=user, tipo='cliente')
+        
+		# Líneas para agregar permisos
+		#content_type = ContentType.objects.get_for_model(BoardsModel)
+		#es_miembro_1 = Permission.objects.get(
+        #        codename='es_miembro_1',
+        #        content_type = content_type
+        #)
+		
+		#user.user_permissions.add(es_miembro_1)
+		#user.is_staff = True
+		
+		user.save()
+        user = authenticate(username=email, password=password1)
+        if user is not None:
+            login(request, user)
+        messages.success(request, 'Usuario creado exitosamente')
+        return redirect('index')
+    
+class CustomLoginView(SuccessMessageMixin, LoginView):
+    success_message = "Sesion Iniciada Exitosamente"
+    template_name = 'registration/login.html'  
+    redirect_authenticated_user = True
+    
+class CustomLogoutView(LogoutView):
+    next_page = reverse_lazy('login')
+    def dispatch(self, request, *args, **kwargs):
+        response = super().dispatch(request, *args, **kwargs)
+        messages.add_message(request, messages.WARNING, "Sesion Cerrada Exitosamente")
+        return response
+
+"""
+ OJO -->  IMPORTACIONES NECESARIAS
+ """
+ 
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.views import View
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from datetime import timedelta, date
+from django.urls import reverse, reverse_lazy
+from django.contrib.auth import authenticate, login
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.views import LoginView, LogoutView
+from .models import *
+from django.contrib.auth.models import User
+# Activar para asignar permisos
+#from django.contrib.contenttypes.models import ContentType
+#from django.contrib.auth.models import Permission
+
+28) Ajustes en urls.py de /web
+
+from django.urls import path
+from .views import index, premium
+from web.views import CustomLoginView, CustomLogoutView, RegisterView
+
+urlpatterns = [
+    path('', index, name='index'),
+	path("premium/", premium, name="premium"),
+    path('accounts/login/', CustomLoginView.as_view(), name='login'),
+    path('accounts/logout/', CustomLogoutView.as_view(), name='logout'),
+    path('accounts/register/', RegisterView.as_view(), name='register'),
+]
+
+29) Agregar el decorador @login_required a la vista "Premium".
+	(o bien, a la vista que quieres que sea solo visible por
+	 los usuarios autenticados.)
+	
+	Agregar el decorador @permission_required('vehiculo.visualizar_catalogo')
+	si desea que una vista sea accesible solo por aquellos usuarios
+	que tengan otorgado ese permiso.
+
+30) Nueva versión del header.html  (agrega botones de login, register y logout).
+	Hacer los ajustes de opciones de menú, enlaces, colores, etc.
+
+<nav class="navbar navbar-expand-lg bg-dark text-light">
+    <div class="container-fluid">
+      <a class="navbar-brand text-light" href="#">Vehículos</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active text-light" aria-current="page" href="#">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="#">Agregar</a>
+          </li>
+		  <li class="nav-item">
+            <a class="nav-link text-light" href="#">Listar</a>
+          </li>
+          
+        </ul>
+
+        <ul class="navbar-nav">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <form action="{% url 'logout' %}" method="post">
+            <label class="fs-5 text-warning me-3">Hola, {{ user.first_name }} </label>
+            {% csrf_token %}
+            <button class="btn btn-outline-danger" type="submit">Salir</button>
+          </form>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a href="{% url 'login' %}" class="btn btn-outline-primary btn-sm">Login</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'register' %}" class="btn btn-outline-success btn-sm ms-2">Registro</a>
+        </li>
+        {% endif %}
+      </ul>
+      </div>
+    </div>
+  </nav>
+
+31) Ajustes en settings.py
+Al final agregar:
+ 
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/accounts/login'

@@ -1,0 +1,82 @@
+Aces — 1:00 p.m.
+Mira no sé si sea conveniente que le pases la mini guía y el proyecto que hicimos con esa guía
+Para que aprenda los patrones de diseño enseñados por Homero (que son el estándar de la industria)
+Y una vez se los enseñes, crear una skill o algo para replicarlo a todos los otros proyectos
+Podrías intentar algo así? Mostrarle dos proyectos chicos con Django para que entienda cómo se hace bien?
+Alo
+
+Aces — 1:05 p.m.
+MINI GUÍA - CREACIÓN DE PROYECTO DJANGO
+=======================================
+PASOS INICIALES
+===============
+
+1) Abrir el CMD en la carpeta de su preferencia.
+
+mini_guia_django_v3.txt
+16 KB
+"""
+1) Crear proyecto. En la carpeta de su elección, abrir el terminal y ejecutar:
+""" 
+    django-admin startproject rental_ski
+    cd rental_ski
+    
+
+guia_proyecto_ski_clase01.py
+9 KB
+"""
+1) Registrar modelos en el admin.py
+"""
+from django.contrib import admin
+from .models import Categoria, Equipo, Arriendo, UserProfile
+
+guia_proyecto_ski_clase02.py
+11 KB
+"""
+1) Activemos el botón de arrendar 
+
+En el views.py agreguemos la nueva vista:
+"""
+@login_required
+
+guia_proyecto_ski_clase03.py
+6 KB
+Tipo de archivo adjunto: acrobat
+Caso Rental Ski.pdf
+338.73 KB
+Tipo de archivo adjunto: archive
+rental_ski.7z
+15.54 KB
+Vas a tener que instalar:
+Python
+Postgres
+Postgres funciona con software distinto a los editores de Código. Cuando se instala Postgres por primera vez, te instala el software pgAdmin 4. También hay otro que se llama Dbeaver
+
+Aces — 1:12 p.m.
+La diferencia, es que pgAdmin sólo funciona para bases de datos de Postgres, mientras que Dbeaver funciona con todas, ej: MySQL, Oracle, BigQuery
+Antigravity va a necesitar:
+Primero, que instales Python y Postgres a nivel de Windows. Django todavía no, porque eso se instala en cada proyecto. El concepto clave ahí son los entornos virtuales, y Django usa uno que se llama Virtual End Wrapper 
+Luego, Antigravity probablemente te va a pedir, para poder trabajar con Postgres, que actives el MCP
+Imagen
+
+Aces — 1:25 p.m.
+AG va a necesitar que actives el MCP para poder acceder a la base de datos. Probablemente exista la posibilidad de vincularlo con pgAdmin y/o con Dbeaver
+Aces — 1:47 p.m.
+La versión utilizada en dichos proyectos fue la 3.12.4. Pero la versión más actual de Python es la 3.14.3. Lo ideal, es que para que AG pueda aprender de los proyectos, instale primero la versión 3.12.4. Pero luego, para trabajar en lo que viene, tendría que usar la más actualizada con la que él aprendió, cosa que le vas a tener que consultar
+Tipo de archivo adjunto: acrobat
+Caso Biblioteca Vecinal (Python).pdf
+449.12 KB
+Tipo de archivo adjunto: archive
+biblioteca_vecinal.7z
+14.62 KB
+Tipo de archivo adjunto: acrobat
+Caso_Pet_Store_0080.pdf
+750.28 KB
+Tipo de archivo adjunto: archive
+patitas_petshop.zip
+41.52 KB
+A nivel de backend, lo esencial es saber cómo funciona el Model View Template
+Aces — 1:55 p.m.
+A nivel de comunicación entre Python y Postgres, el concepto clave es el ORM, que es un traductor universal hacia el SQL para que uno se conecte. Crea un dialecto, que no es Python, con los cuales uno puede realizar acciones sobre una base de datos 
+En otras palabras, es una forma de manipular la base de datos a través de Python
+En este punto, para AG conectarse mediante MCP es clave

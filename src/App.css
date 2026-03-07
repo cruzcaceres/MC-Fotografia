@@ -1,0 +1,249 @@
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Minimalist Navigation Placeholder */
+.nav-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* Light backdrop blur for sticky nav */
+  background: rgba(248, 247, 246, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-border);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
+}
+
+/* Ocultar el Navbar al hacer scroll hacia abajo (Smart Nav) */
+.nav-header.nav-hidden {
+  transform: translateY(-100%);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  font-weight: 300;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--color-accent);
+}
+
+/* --- HAMBURGER MENU BUTTON (Oculto por defecto en Desktop) --- */
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 28px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 60;
+}
+
+.hamburger-btn span {
+  width: 100%;
+  height: 2px;
+  background: var(--color-text);
+  border-radius: 10px;
+  transition: all 0.3s linear;
+  position: relative;
+  transform-origin: 1px;
+}
+
+/* Animación del Hamburguesa a la "X" al abrir */
+.hamburger-btn.open span:nth-child(1) {
+  transform: rotate(45deg);
+}
+
+.hamburger-btn.open span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.hamburger-btn.open span:nth-child(3) {
+  transform: rotate(-45deg);
+}
+
+/* Dark mode for About page */
+.nav-header.nav-dark {
+  background: rgba(11, 11, 12, 0.85);
+  border-bottom: 1px solid rgba(248, 247, 246, 0.08);
+  color: var(--color-bg);
+}
+
+.nav-header.nav-dark .nav-links a {
+  color: var(--color-bg);
+}
+
+.nav-header.nav-dark .nav-links a:hover {
+  color: var(--color-accent);
+}
+
+.nav-header.nav-dark .nav-links a.text-accent {
+  color: var(--color-accent);
+}
+
+.nav-header.nav-dark .hamburger-btn span {
+  background: var(--color-bg);
+}
+
+/* --- RESPONSIVE MOBILE NAV (Menú Desplegable) --- */
+@media (max-width: 850px) {
+  .hamburger-btn {
+    display: flex;
+    /* Se hace visible en móvil */
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(248, 247, 246, 0.98);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    flex-direction: column;
+    align-items: center;
+    padding-top: 5rem;
+    gap: 3rem;
+    font-size: 1.5rem;
+    /* Textos más grandes para dedos */
+
+    /* Estado Oculto (Desplazado a la derecha) */
+    transform: translateX(100%);
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  /* Estado Visible (Al presionar el botón) */
+  .nav-links.mobile-menu-open {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Adaptación del menú móvil cuando se está en la página oscura (About) */
+  .nav-header.nav-dark .nav-links {
+    background: rgba(11, 11, 12, 0.98);
+  }
+}
+
+/* Contenedor que da el margen de "scroll" antes de ser empujado */
+.hero-scroll-container {
+  height: 120vh;
+  /* 100vh para hero, 20vh de tiempo de enganche (empuje) */
+  position: relative;
+  z-index: 10;
+  width: 100%;
+}
+
+/* Contenedor del Hero - Pegajoso y de Pantalla Completa */
+.hero-wrapper {
+  height: 100vh;
+  width: 100%;
+  position: sticky;
+  /* Esto crea la magia de que quede fijo mientras se scrollea */
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  /* El nav superior es fixed/sticky, así que el hero sube para estar centrado perfectamente en la pantalla total */
+  margin-top: -100px;
+}
+
+.hero-title {
+  /* Letra inmensa para dominar la pantalla en Desktop */
+  font-size: clamp(3rem, 11vw, 10rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  margin: 0;
+  text-transform: uppercase;
+  color: var(--color-text);
+  white-space: nowrap;
+
+  /* Flexbox para controlar la alienación de nombre y apellido */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 0.3em;
+  /* Espacio natural entre MARCELO y CAMPBELL en web */
+}
+
+/* --- RESPONSIVE MOBILE & TABLET (Apilamiento vertical del título) --- */
+@media (max-width: 850px) {
+  .hero-title {
+    flex-direction: column;
+    /* Apila Nombre arriba y Apellido abajo */
+    align-items: center;
+    /* Los centra perfectamente al medio */
+    gap: 0;
+    /* Elimina el espacio extra horizontal al volverse vertical */
+    font-size: clamp(4rem, 16vw, 8rem);
+    /* Hace que la letra pueda crecer más en celular al repartirse en dos líneas */
+    line-height: 0.9;
+    /* Los comprime sutilmente para que se vean como un ladrillo sólido */
+  }
+}
+
+/* "O" Window effect in MARCELO */
+.letter-window {
+  display: inline-block;
+  width: 0.74em;
+  /* Ajuste exacto al tamaño de mayúscula (Cap-height) para no pasarse hacia arriba */
+  height: 0.74em;
+  border-radius: 50%;
+  vertical-align: baseline;
+  /* Descansa perfectamente en la línea base con el resto de las letras */
+  margin: 0 0.04em;
+  /* Eliminados márgenes negativos para un asiento natural */
+  position: relative;
+  overflow: hidden;
+
+  /* Imagen de sombra y misterio para el perfil de Marcelo */
+  background-image: url('/fotos_originales/O-tren.png');
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(100%) contrast(1.2);
+  /* Integración monótona con la UI */
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+  /* Sombra interna para darle profundidad de "agujero/ventana" */
+}
+
+/* Asegurar que el contenido principal no tenga fondo solido para no cortar el título */
+.main-content {
+  position: relative;
+  z-index: 20;
+  /* Tiene que estar encima del Hero (z-index 10) */
+  background-color: transparent;
+  min-height: 100vh;
+  padding-top: 0;
+  margin-top: -50vh;
+}
+
+/* Masonry Placeholder */
+.gallery-placeholder {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+  text-align: center;
+  color: #666;
+  font-weight: 200;
+}

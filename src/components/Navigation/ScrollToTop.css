@@ -1,0 +1,71 @@
+/* 
+  Estilo "Fantasma" Flotante: 
+  Un ascensor invisible que solo reacciona cuando el usuario lo necesita.
+*/
+.scroll-top-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--color-bg);
+    /* Fondo cálido nativo para camuflarse */
+    color: var(--color-text);
+    /* Texto oscuro */
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    /* Borde sutil casi imperceptible */
+    font-size: 1.2rem;
+    font-weight: 300;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+
+    /* Estados base = Oculto hacia abajo */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+
+    /* Animación suavísima tipo "Fade-in flotante" */
+    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease, color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* El gatillo de JS al scrollear 500px */
+.scroll-top-btn.visible {
+    opacity: 0.8;
+    /* Ligeramente transparente para no estorbar fotos */
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Reacción al Hover (Pasar el mouse) */
+.scroll-top-btn:hover {
+    opacity: 1;
+    /* Se vuelve sólido materialmente */
+    color: var(--color-accent);
+    /* Su flecha se vuelve Naranja fuego */
+    background: #ffffff;
+    /* Brilla como hoja limpia */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    /* Una sombra elegante fotográfica */
+    transform: translateY(-5px);
+    /* Da un saltito sutil incitando a "subir" */
+}
+
+/* 
+  Mobile First (Pantallas chicas de teléfono)
+  El dedo tapa más espacio, debemos moverlo estratégicamente.
+*/
+@media (max-width: 768px) {
+    .scroll-top-btn {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 40px;
+        height: 40px;
+        background: rgba(248, 247, 246, 0.95);
+        /* Cristal empañado para contraste en móvil */
+        backdrop-filter: blur(5px);
+    }
+}

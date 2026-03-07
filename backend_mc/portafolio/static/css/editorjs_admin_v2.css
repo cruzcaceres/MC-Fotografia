@@ -1,0 +1,124 @@
+/* Fix para los menús de Editor.js ocultos por la estructura de Django Admin */
+
+fieldset,
+fieldset.module,
+.form-row,
+.form-row>div,
+.fieldBox,
+.aligned .form-row>div {
+    overflow: visible !important;
+}
+
+/* Permitir que la envoltura original de django-editorjs respire */
+.django-editorjs-fields,
+div[class*="editorjs"] {
+    overflow: visible !important;
+}
+
+/* Modificadores globales para EditorJS */
+.codex-editor {
+    position: relative !important;
+    z-index: 50 !important;
+}
+
+.codex-editor__redactor {
+    overflow: visible !important;
+    padding-bottom: 300px !important;
+    /* Más espacio extra si es el último bloque */
+}
+
+.ce-block,
+.ce-block__content {
+    overflow: visible !important;
+}
+
+/* Forzar las herramientas y menús en la capa superior absoluta */
+.ce-toolbar {
+    z-index: 9999 !important;
+}
+
+.ce-popover,
+.ce-settings,
+.ce-toolbar__actions,
+.ce-conversion-toolbar {
+    z-index: 10000 !important;
+    overflow: visible !important;
+}
+
+/* Si el popover cae en una ventana con mucho nivel de profundidad de admin */
+#editorjs_content_editorjs {
+    overflow: visible !important;
+}
+
+/* ========================================================
+   CORRECCIONES PARA EL TEMA CLARO (M.C. MINIMALISTA)
+   ======================================================== */
+
+/* Contenedor principal de EditorJS: Integración con la hoja de papel blanca */
+div[data-editorjs-holder] {
+    background-color: #fefdfb !important;
+    /* Igual que var(--photo-bg) */
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    color: #0f0f11 !important;
+    border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Textos dentro de EditorJS */
+.codex-editor .ce-paragraph,
+.codex-editor .ce-header,
+.codex-editor blockquote,
+.codex-editor .cdx-list__item,
+.codex-editor .cdx-input,
+.codex-editor .ce-rawtool__textarea {
+    color: #0f0f11 !important;
+    font-family: 'Manrope', sans-serif !important;
+}
+
+/* Quitar los blancos obligados del fondo oscuro de Jazzmin/Bootstrap */
+.ce-toolbar__plus,
+.ce-toolbar__settings-btn {
+    background-color: transparent !important;
+    color: #555 !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+.ce-toolbar__plus:hover,
+.ce-toolbar__settings-btn:hover {
+    background-color: #ee7c2b !important;
+    /* Acento Naranja MC */
+    color: #fff !important;
+}
+
+/* Popups Menu Contextual */
+.ce-popover,
+.ce-inline-toolbar,
+.ce-conversion-toolbar,
+.ce-settings {
+    background-color: #fefdfb !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+.ce-popover__item,
+.ce-settings__button,
+.ce-inline-toolbar__dropdown,
+.ce-inline-tool {
+    color: #0f0f11 !important;
+}
+
+.ce-popover__item-icon,
+.ce-conversion-tool__icon {
+    background-color: rgba(0, 0, 0, 0.04) !important;
+    color: #0f0f11 !important;
+    box-shadow: none !important;
+}
+
+.ce-popover__item:hover,
+.ce-settings__button:hover,
+.ce-inline-toolbar__dropdown:hover,
+.ce-inline-tool:hover,
+.ce-conversion-tool:hover {
+    background-color: rgba(238, 124, 43, 0.1) !important;
+    color: #ee7c2b !important;
+}
