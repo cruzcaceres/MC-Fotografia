@@ -1,0 +1,31 @@
+name: Sync to Client Repository
+
+on:
+  push:
+    branches:
+      - main # O la rama que uses como principal
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to Client Repo
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          # TOKEN DE MARCELO: Requerido para poder escribir en su repositorio
+          API_TOKEN_GITHUB: ${{ secrets.CLIENT_REPO_PAT }}
+        with:
+          source-directory: '.'
+          # LA CUENTA ORIGEN (Cruz): Evita que se copie el propio directorio .github (opcional, pero buena práctica si Marcelo no necesita los workflows internos)
+          # Esto evita hacer un loop infinito si copiáramos también el workflow
+          target-directory: '' 
+          destination-github-username: 'USERNAME_DE_MARCELO' # Reemplazar!
+          destination-repository-name: 'NOMBRE_REPO_MARCELO' # Reemplazar!
+          user-email: 'tu_correo@ejemplo.com'                # Reemplazar!
+          target-branch: main
+          commit-message: "chore: Auto-sync from agency repository"
