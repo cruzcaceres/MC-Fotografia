@@ -15,6 +15,16 @@ jobs:
           fetch-depth: 0
 
       - name: Push to Client Repo
-        run: |
-          git remote add client https://${{ secrets.MARCELO_GITHUB_TOKEN }}@github.com/mcampbelldev/MC-portfolio.git
-          git push client main:main --force
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.MARCELO_GITHUB_TOKEN }}
+        with:
+          source-directory: '.'
+          # LA CUENTA ORIGEN (Cruz): Evita que se copie el propio directorio .github (opcional, pero buena práctica si Marcelo no necesita los workflows internos)
+          # Esto evita hacer un loop infinito si copiáramos también el workflow
+          target-directory: '' 
+          destination-github-username: 'mcampbelldev'
+          destination-repository-name: 'MC-portfolio'
+          user-email: 'bot@github.com'
+          target-branch: main
+          commit-message: "chore: Auto-sync from agency repository"
