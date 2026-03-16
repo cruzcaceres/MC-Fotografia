@@ -17,7 +17,6 @@ jobs:
       - name: Push to Client Repo
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          # TOKEN DE MARCELO: Requerido para poder escribir en su repositorio
           API_TOKEN_GITHUB: ${{ secrets.MARCELO_GITHUB_TOKEN }}
         with:
           source-directory: '.'
