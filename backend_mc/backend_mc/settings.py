@@ -41,6 +41,12 @@ ALLOWED_HOSTS = [host for host in ALLOWED_HOSTS if host]
 if DEBUG and not ALLOWED_HOSTS:
     ALLOWED_HOSTS = ['*']
 
+CSRF_TRUSTED_ORIGINS = []
+if os.getenv('RAILWAY_PUBLIC_DOMAIN'):
+    CSRF_TRUSTED_ORIGINS.append(f"https://{os.getenv('RAILWAY_PUBLIC_DOMAIN')}")
+if os.getenv('RENDER_EXTERNAL_HOSTNAME'):
+    CSRF_TRUSTED_ORIGINS.append(f"https://{os.getenv('RENDER_EXTERNAL_HOSTNAME')}")
+
 # Configuración global estricta para APIs (DRF)
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -167,6 +173,9 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+
+# Evitar 500 Server Error si WhiteNoise no encuentra el directorio o manifiesto de estáticos al arrancar
+WHITENOISE_MANIFEST_STRICT = False
 
 # Configuración de Almacenamiento S3 (Cloudflare R2)
 if os.getenv('R2_ACCESS_KEY_ID') and os.getenv('R2_SECRET_ACCESS_KEY'):
