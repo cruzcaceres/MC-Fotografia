@@ -41,7 +41,10 @@ ALLOWED_HOSTS = [host for host in ALLOWED_HOSTS if host]
 if DEBUG and not ALLOWED_HOSTS:
     ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = []
+# Habilitar manejo de HTTPS detrás del proxy de Railway
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+CSRF_TRUSTED_ORIGINS = [origin for origin in os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',') if origin]
 if os.getenv('RAILWAY_PUBLIC_DOMAIN'):
     CSRF_TRUSTED_ORIGINS.append(f"https://{os.getenv('RAILWAY_PUBLIC_DOMAIN')}")
 if os.getenv('RENDER_EXTERNAL_HOSTNAME'):
