@@ -230,3 +230,33 @@ equirements.txt y ajustes de seguridad/despliegue en settings.py. Modificación 
 - **CI/CD (Integración y Despliegue Continuo):** Práctica de desarrollo que en nuestro caso usamos para que cada *push* en nuestra rama envíe el código actualizado a las manos del cliente mediante un *Workflow* automatizado.
 - **Procfile:** Archivo de texto sin extensión que le instruye a la plataforma de hosting (ej. Heroku/Render) qué comando ejecutar para iniciar los procesos web del backend.
 - **Workflow (GitHub Actions):** Archivo YAML (sync_to_client.yml) que dicta una serie de pasos automáticos a ejecutar en los servidores de GitHub ante un evento (como un push).
+
+---
+
+## LOG OPERATIVO
+- **Proyecto / Tema:** Portafolio de Fotografía (Despliegue a Producción Completo: Railway, Vercel, Neon y Cloudflare R2).
+- **Fecha:** 18 al 20 de marzo de 2026
+- **Probé / Trabajé en:**
+  - **Fase 2 (Estabilización de GitHub Actions):** Inyección de llaves de seguridad y permisos directos para lograr el "Espejo" en el repositorio del cliente.
+  - **Fase 3 (Backend en Railway):** Configuración del "Root Directory" de monorepo para forzar el motor de Python (bypaseando a Vite). Resolución de conflictos de versiones actualizando `runtime.txt` a Python 3.12. Desactivación de verificaciones estrictas en WhiteNoise (`CompressedStaticFilesStorage`) para evitar colapsos al no encontrar mapas de origen de Bootstrap al hacer el despliegue. Configuración exhaustiva de seguridad HTTP/HTTPS tras proxy (`SECURE_PROXY_SSL_HEADER`) y paso dinámico de CORS (`CSRF_TRUSTED_ORIGINS`).
+  - **Base de Datos y Storage:** Ejecución de migraciones y creación del Superusuario en Neon.tech directamente inyectando los scripts de `manage.py` de Django aisladamente. Resolución de error "NoSuchBucket" ajustando la URL final del Endpoint y abriendo permisos de solo lectura a la web a través del dominio público `r2.dev` de Cloudflare.
+  - **Fase 4 (Frontend en Vercel):** Refactorización del código base (`api.js`) para reemplazar direcciones `localhost:8000` estrictas por `import.meta.env.VITE_API_URL`. Despliegue y vinculación en Vercel logrando petición HTTP 200 en `/api/fotos/`.
+- **Resultado:** ¡Sitio publicado y ecosistema en la nube integrado al 100%! La arquitectura Headless opera como un reloj suizo: Django administra los datos y envía JSON seguros a React, mientras Cloudflare despacha velozmente las imágenes esquivando todas las prevenciones CSRF de los navegadores.
+- **Aprendí:** La cantidad masiva de pequeñas restricciones y mecanismos de defensa por defecto que tanto Django 6, Cloudflare, como Servicios Proxy tipo Railway imponen al intentar acoplarlos. Todo paso conlleva configurar meticulosa y rigurosamente las barreras de origen, protocolos seguros (vía cabeceras inversas) y el manejo silencioso de excepciones en los motores de despliegue automáticos.
+- **Siguiente paso (1):** Curaduría y carga de contenido visual real en la base de datos (por parte de Marcelo) probados directamente en el entorno de producción. Pruebas visuales completas por parte del usuario y entrega formal del proyecto.
+
+## LÍNEA DE LA CONVERSACIÓN (temas en orden)
+1) **El Espejo de Repositorios:** Estabilización de los permisos GITHUB_TOKEN.
+2) **Engaños al Robot Constructor:** Bypass al constructor de Railway para usar Python y no node (configuración en Root Directory) más arreglos al almacenamiento de WhiteNoise para esquivar errores con `bootstrap.bundle.map`.
+3) **Lidiando con el Guardián (CSRF y SSL):** Diagnósticos y solución de errores Error 500 y 403 modificando las defensas Proxy de Django.
+4) **Cloudflare a Puertas Abiertas:** Solución a `NoSuchBucket` e implementación de dominio asignado `r2.dev` para evitar la restricción por ORB en navegadores ante la caída o bloqueo CORS de imágenes.
+5) **El Fantasma de Localhost:** Corrección manual de código para permitir inyección dinámica de variables de entorno de frontend usando Vercel.
+
+**Cierre:** El hito más complejo superado. El portafolio está totalmente público, funcional, respaldado y optimizado.
+
+## GLOSARIO OPERATIVO
+- **Arquitectura Headless (Sin Cabeza):** Diseño donde la base de datos y la gestión (Backend / Railway) están totalmente desconectadas del diseño estético (Frontend / Vercel), comunicándose únicamente mediante JSON de datos por APIs.
+- **CORS (Cross-Origin Resource Sharing):** Medida de seguridad vital en navegadores. Bloquea que un sitio (Vercel) intente consumir descaradamente recursos de otro sin permiso (Railway / Cloudflare R2).
+- **Proxy Inverso:** Servidor intermedio (como Railway) que recibe peticiones del usuario en HTTPS seguro y las redirige hacia el servidor web nativo de la aplicación. Obliga al uso de cabeceras de refracción seguras (como `HTTP_X_FORWARDED_PROTO` en Django).
+- **WhiteNoise (Storage):** Librería que le permite al mismo programa en Python comprimir, hashear y despachar archivos HTML/CSS. Requiere configuraciones permisivas en esquemas inestables con herramientas que ignoran o extravían archivos auxiliares como sourcemaps.
+- **ERR_BLOCKED_BY_ORB:** Código de error en la consola del navegador que indica que, por seguridad, en un intento de cargar una imagen (o medio), el servidor retornó un documento en texto/XML (como de "Acceso Denegado"), por lo cual el navegador omitió mostrar algo.
